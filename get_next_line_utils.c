@@ -6,7 +6,46 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:49 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/03/02 19:52:23 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/03/17 21:24:33 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
+
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char			*join;
+	size_t			counter_s1;
+	size_t			counter_s2;
+
+	counter_s1 = 0;
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+
+	if (!(join = (char *)malloc(ft_strlen(s1) +ft_strlen(s2)  + 1)))
+		return (NULL);
+	while (s1[counter_s1])
+	{
+		join[counter_s1] = s1[counter_s1];
+		counter_s1++;
+	}
+	counter_s2 = 0;
+	while (s2[counter_s2])
+	{
+		join[counter_s1 + counter_s2] = s2[counter_s2];
+		counter_s2++;
+	}
+	join[counter_s1 + counter_s2] = '\0';
+	return (join);
+}
+
+size_t	ft_strlen(char *s)
+{
+	size_t size;
+
+	size = 0;
+	while (s[size])
+		size++;
+	return (size);
+}

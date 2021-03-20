@@ -6,12 +6,11 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:49 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/03/17 21:24:33 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/03/20 18:18:08 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -48,4 +47,20 @@ size_t	ft_strlen(char *s)
 	while (s[size])
 		size++;
 	return (size);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	size_t counter;
+
+	counter = 0;
+	while (s[counter] != '\0')
+	{
+		if (s[counter] == c)
+			return ((char *)s + counter);
+		counter++;
+	}
+	if (s[counter] == c)
+		return ((char *)s + counter);
+	return (NULL);
 }

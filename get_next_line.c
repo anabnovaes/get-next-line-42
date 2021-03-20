@@ -6,26 +6,40 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:53 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/03/17 21:16:06 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/03/20 18:21:28 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# define BUFFER_SIZE 20
+# define BUFFER_SIZE 60
 #include "get_next_line.h"
-#include<sys/types.h>
-#include<sys/stat.h>
-#include <fcntl.h> 
+
+int read_file(int fd,char *buffer, char file)
+{
+	int		read_file;
+	size_t	size_to_save;
+
+	read_file = 1;
+	while(read_file != 0)
+	{
+		read_file = read(fd,buffer,BUFFER_SIZE);
+		if (ft_strchr(buffer,'\n'))
+			
+	}
+}
 
 int	get_next_line(int fd, char **line)
 {
-	char *file;
-	static char *line[BUFFER_SIZE + 1];
-	
-	file = read(fd, line, BUFFER_SIZE);
-	if (BUFFER_SIZE < 0)
-		return - 1;
-}
+	static char *file[BUFFER_SIZE + 1];
+	char		*buffer;
+	int		read;
 
-int main(void)
-{
+	read = 1;
+	if (BUFFER_SIZE < 0 || fd < 0)
+		return - 1;
+	if (!(buffer = (char)malloc(BUFFER_SIZE) * sizeof(char)))
+		return - 1;
+	read = read_file(fd, buffer,file);
+	if (read == 0)
+		return 0;
+	
 }

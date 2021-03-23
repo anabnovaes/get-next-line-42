@@ -6,23 +6,24 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:53 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/03/23 08:37:24 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/03/23 08:58:12 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #define BUFFER_SIZE 60
 #include "get_next_line.h"
 
-size_t		check_and_save(size_t read_file, int end_line, t_line *s_char)
+size_t		check_and_save(size_t read, int end, t_line *s_char,char *n_line)
 {
-	if (read_file == 0)
+	if (read == 0)
 		return (1);
-	else if (!end_line)
+	else if (!end)
 		return (2);
-	else if (read_file < 0)
+	else if (read < 0)
 		return (-1);
 	else
-		return (0);
+	s_char -> line = ft_strjoin(n_line, s_char -> line, end);
+	s_char -> after_read = ft_strjoin(n_line[end + 1], s_char -> line, end);
 }
 
 int		read_file(int fd, char *n_line, char file)
@@ -33,13 +34,13 @@ int		read_file(int fd, char *n_line, char file)
 	int			check_read;
 
 	read_file = -2;
-	if (!(s_char.read = (char *)malloc(BUFFER_SIZE + 1) * sizeof(char)))
+	if (!(s_char.read = (char)malloc(BUFFER_SIZE + 1) * sizeof(char)))
 		return (-1);
 	while (read_file == -2)
 	{
 		read_file = read(fd, s_char.read, BUFFER_SIZE);
 		end_line = ft_strchr(s_char.read, "\n");
-		check_read = check_and_save(read_file, end_line, &s_char);
+		check_read = check_and_save(read_file, end_line, &s_char, &n_line);
 		if (check_read == 2)
 			read_file == -2;
 		else

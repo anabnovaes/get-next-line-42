@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:49 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/03/22 21:20:59 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/03/22 21:49:11 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_strjoin(char const *s1, char const *s2, size_t positions)
 
 size_t	ft_strlen(char *s)
 {
-	size_t 			size;
+	size_t			size;
 
 	size = 0;
 	while (s[size])

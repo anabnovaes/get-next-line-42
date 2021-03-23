@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:53 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/03/22 22:02:57 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/03/23 08:37:24 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		read_file(int fd, char *n_line, char file)
 	int			check_read;
 
 	read_file = -2;
-	if (!(s_char.read = (char)malloc(BUFFER_SIZE + 1) * sizeof(char)))
+	if (!(s_char.read = (char *)malloc(BUFFER_SIZE + 1) * sizeof(char)))
 		return (-1);
 	while (read_file == -2)
 	{

@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:51:00 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/03/22 21:29:17 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/03/23 08:34:59 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # include <fcntl.h>
 
 int				get_next_line(int fd, char **line);
+
+int				read_file(int fd, char *n_line, char file);
+
+size_t			check_and_save(size_t read_file, int end_line, t_line *s_char);
 
 char			*ft_strjoin(char const *s1, char const *s2, size_t positions);
 

@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:53 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/03/22 21:51:08 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/03/22 22:02:57 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,13 @@ int		read_file(int fd, char *n_line, char file)
 		else
 		{
 			file = s_char.after_read;
-			n_line = s_char.line;
+			free(s_char.read);
 			return (check_read);
 		}
+		s_char.line = ft_strjoin(n_line, s_char.line, ft_strlen(s_char.line));
+        free(n_line);
+        n_line = s_char.line;
 	}
-	free(s_char.read);
 	return (1);
 }
 

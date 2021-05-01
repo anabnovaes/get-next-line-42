@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:49 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/03/22 21:49:11 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/01 13:38:17 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ char	*ft_strjoin(char const *s1, char const *s2, size_t positions)
 	size_t			counter_s2;
 
 	counter_s1 = 0;
+	join = (char *)malloc(ft_strlen(s1) + positions);
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	if (!(join = (char *)malloc(ft_strlen(s1) + positions)))
+	if (!join)
 		return (NULL);
 	while (s1[counter_s1])
 	{
@@ -48,9 +49,9 @@ size_t	ft_strlen(char *s)
 	return (size);
 }
 
-char	*ft_strchr(const char *s, int c)
+int	ft_strchr(const char *s, int c)
 {
-	size_t		counter;
+	int	counter;
 
 	counter = 0;
 	while (s[counter] != '\0')
@@ -66,13 +67,14 @@ char	*ft_strchr(const char *s, int c)
 
 char	*ft_strdup(const char *s1)
 {
-	size_t		size_s1;
-	char		*s2;
+	size_t	size_s1;
+	char	*s2;
 
 	size_s1 = ft_strlen((char *)s1);
+	s2 = malloc(size_s1 + 1);
 	if (s1 == NULL)
 		return (NULL);
-	else if (!(s2 = malloc(size_s1 + 1)))
+	else if (!s2)
 		return (NULL);
 	else
 	{
@@ -83,7 +85,7 @@ char	*ft_strdup(const char *s1)
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t len)
 {
-	size_t		counter;
+	size_t	counter;
 
 	counter = 0;
 	if (len == 0)

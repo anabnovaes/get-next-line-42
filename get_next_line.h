@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:51:00 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/01 21:05:01 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/02 13:26:03 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_strjoin(char const *s1, char const *s2, size_t positions);
 
 size_t	ft_strlen(char *s);
 
-char	*ft_strchr(char *s, int c);
+size_t	ft_strchr(char *s, int c);
 
 char	*ft_strdup(const char *s1);
 

@@ -6,33 +6,33 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:49 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/01 13:38:17 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/01 21:32:52 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strjoin(char const *s1, char const *s2, size_t positions)
+char	*ft_strjoin(char const *dest, char const *org, size_t positions)
 {
 	char			*join;
 	size_t			counter_s1;
 	size_t			counter_s2;
 
 	counter_s1 = 0;
-	join = (char *)malloc(ft_strlen(s1) + positions);
-	if (s1 == NULL || s2 == NULL)
+	join = (char *)malloc(ft_strlen((char *)dest) + positions);
+	if (dest == NULL || org == NULL)
 		return (NULL);
 	if (!join)
 		return (NULL);
-	while (s1[counter_s1])
+	while (dest[counter_s1])
 	{
-		join[counter_s1] = s1[counter_s1];
+		join[counter_s1] = dest[counter_s1];
 		counter_s1++;
 	}
 	counter_s2 = 0;
-	while (counter_s2 < positions && s2[counter_s2])
+	while (counter_s2 < positions && org[counter_s2])
 	{
-		join[counter_s1 + counter_s2] = s2[counter_s2];
+		join[counter_s1 + counter_s2] = org[counter_s2];
 		counter_s2++;
 	}
 	join[counter_s1 + counter_s2] = '\0';
@@ -49,7 +49,7 @@ size_t	ft_strlen(char *s)
 	return (size);
 }
 
-int	ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	int	counter;
 
@@ -57,11 +57,11 @@ int	ft_strchr(const char *s, int c)
 	while (s[counter] != '\0')
 	{
 		if (s[counter] == c)
-			return (counter);
+			return (s + counter);
 		counter++;
 	}
 	if (s[counter] == c)
-		return (counter);
+		return (s + counter);
 	return (NULL);
 }
 
@@ -92,7 +92,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t len)
 	{
 		return (ft_strlen((char *)src));
 	}
-	if (dst == NULL || src == NULL)
+	if (dst == NULL && src == NULL)
 	{
 		return (0);
 	}

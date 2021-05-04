@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:49 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/02 13:25:44 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/04 19:34:08 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ size_t	ft_strlen(char *s)
 	return (size);
 }
 
-size_t	*ft_strchr(char *s, int c)
+int	ft_strchr(char *s, int c)
 {
 	int	counter;
 

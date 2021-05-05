@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:51:00 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/04 19:34:11 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/04 21:01:27 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 int		get_next_line(int fd, char **line);
 
-char	*ft_strjoin(char const *s1, char const *s2, size_t positions);
+char	*ft_strjoin(char *dest, char *org, size_t positions);
 
 size_t	ft_strlen(char *s);
 
@@ -31,5 +31,7 @@ int		ft_strchr(char *s, int c);
 char	*ft_strdup(const char *s1);
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t len);
+
+void	*ft_calloc(size_t count, size_t size);
 
 #endif

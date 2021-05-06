@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:53 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/04 22:02:50 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/05 21:21:50 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,56 @@
 #include <stdio.h>
 #include <unistd.h>
 
+static void	join_and_concat(char *n_line, char **line, char *temp)
+{
+	int	posit;
+
+	if (!temp)
+	{
+		temp = n_line;
+		free(line);
+	}
+
+	posit = ft_strchr(temp, '\n');
+	n_line = ft_strjoin(n_line, temp + posit + 1, BUFFER_SIZE - posit);
+	*line = ft_strjoin(*line, temp, posit);
+	printf("Posit %d \n", posit);
+	printf("next line %s \n", n_line);
+	printf("line %s \n", n_line);
+}
+
 static int	read_file(int fd, char *buff, char	*n_line, char **line)
 {
 	size_t	reading;
-	int		posit;
 	char	*temp;
+	int		check_buff;
+	int		check_nline;
 
-	temp = NULL;
-	while (ft_strchr(buff, '\n') == -1 && ft_strchr(n_line, '\n') == -1)
+	temp = "";
+	if (!n_line)
+		n_line = NULL;
+	check_buff = ft_strchr(buff, '\n') == -1;
+	check_nline = ft_strchr(n_line, '\n') != -1;
+	printf("buff %d \n", check_buff);
+	printf("nline %d \n", check_nline);
+	while (ft_strchr(buff, '\n') == -1 && ft_strchr(n_line, '\n') != -1)
 	{
+		write(1, "entrei \n", 20);
 		reading = read(fd, buff, BUFFER_SIZE);
 		if (reading == 0)
 			return (0);
 		if ((ft_strchr(buff, '\n') != -1))
 		{
+			temp = ft_strjoin(temp, buff, BUFFER_SIZE + 1);
+			write(1, "entrei \n", 20);
+			printf("temp %s", temp);
 			break ;
 		}
 		else
-		{
-			posit = BUFFER_SIZE + 1;
-			temp = ft_strjoin(temp, buff, posit);
-		}
+			temp = ft_strjoin(temp, buff, BUFFER_SIZE + 1);
 	}
-	posit = ft_strchr(buff, '\n');
-	temp = ft_strjoin(temp, buff, posit);
-	n_line =ft_strjoin(n_line, buff + posit + 1, BUFFER_SIZE - posit);
-	printf("estatica :  %s\n", n_line);
-	*line = temp;
+	join_and_concat(n_line, line, temp);
+	free(buff);
 	return (1);
 }
 

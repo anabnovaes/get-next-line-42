@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:53 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/08 15:16:39 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/08 15:28:58 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,30 @@ static void	join_and_concat(char *temp, char *n_line, char *buff, char **line)
 	if (ft_strchr(n_line, '\n'))
 	{
 		posit = ft_strchr(n_line, '\n');
+		printf("posit %d \n" , posit);
 		if (n_line[posit + 1])
 		{
+			printf("vou unir aqui \n");
 			temp = ft_strjoin(temp, n_line, posit);
+			printf("estatica :  %s\n", temp);
 		}
+		printf("oii \n");
 		n_line =ft_strjoin(n_line, buff + posit + 1, BUFFER_SIZE - posit);
 	}	
 	else
 	{
 		posit = ft_strchr(buff, '\n');
-		printf("posit %d", posit);
+		printf("posit %d \n", posit);
 		if (buff[posit + 1])
 		{
+			printf("vou concatenar \n");
 			n_line =ft_strjoin(n_line, buff + posit + 1, BUFFER_SIZE - posit);
-				printf("estatica :  %s\n", n_line);
+			printf("estatica :  %s\n", n_line);
 		}
-			
+		printf("vou unir o que falta \n");
 		temp = ft_strjoin(temp, buff, posit);
 	}
 	printf("temp :  %s\n", temp);
-
 	*line = temp;
 }
 
@@ -51,10 +55,10 @@ int	read_file(int fd, char *buff, char	*n_line, char **line)
 	char	*temp;
 
 	temp = NULL;
-	write(1, "antes de verificar n_line", 30);
-	write(1, "teste \n", 10);
+	write(1, "antes de verificar n_line\n", 27);
 	if (n_line)
 	{
+		printf("tem coisa na static");
 		if (ft_strchr(n_line, '\n') != -1)
 		{
 			join_and_concat(temp, n_line, buff, line);
@@ -66,7 +70,7 @@ int	read_file(int fd, char *buff, char	*n_line, char **line)
 		printf("entrei \n");
 		ft_bzero(buff, sizeof(buff));
 		reading = read(fd, buff, BUFFER_SIZE);
-		printf("reading %s \n", buff);
+		printf("reading :%s \n", buff);
 		if (reading == 0)
 			return (0);
 		if ((ft_strchr(buff, '\n') != -1))
@@ -78,9 +82,9 @@ int	read_file(int fd, char *buff, char	*n_line, char **line)
 		else
 		{
 			posit = BUFFER_SIZE + 1;
-			printf("temp :  %s\n", temp);
+			printf("temp :%s\n", temp);
 			temp = ft_strjoin(temp, buff, posit);
-			printf("apos join :  %s\n", temp);
+			printf("apos join :%s\n", temp);
 		}
 	}
 	return (1);

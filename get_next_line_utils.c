@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:49 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/05 20:59:27 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/08 15:04:24 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	ft_strchr(char *s, int c)
 		return (-1);
 	while (s[counter] != '\0')
 	{
+		printf("posicao %d\n", s[counter]);
 		if (s[counter] == c)
 			return (counter);
 		counter++;
@@ -60,19 +61,15 @@ int	ft_strchr(char *s, int c)
 	return (-1);
 }
 
-char	*ft_strdup(const char *s1)
+void	ft_bzero(char *final_value, size_t n)
 {
-	size_t	size_s1;
-	char	*s2;
+	size_t	counter;
 
-	size_s1 = ft_strlen((char *)s1);
-	s2 = malloc(size_s1 + 1);
-	if (s1 == NULL || !s2)
-		return (NULL);
-	else
+	counter = 0;
+	while (counter < n)
 	{
-		ft_strlcpy(s2, s1, size_s1 + 1);
-		return (s2);
+		final_value[counter] = '\0';
+		counter++;
 	}
 }
 

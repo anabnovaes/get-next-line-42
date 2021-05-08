@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:51:00 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/04 21:01:27 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/08 15:04:52 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ size_t	ft_strlen(char *s);
 
 int		ft_strchr(char *s, int c);
 
-char	*ft_strdup(const char *s1);
+void	ft_bzero(char *final_value, size_t n);
+
+int		read_file(int fd, char *buff, char	*n_line, char **line);
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t len);
 

@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:41:13 by mchardin          #+#    #+#             */
-/*   Updated: 2021/05/04 21:46:55 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/08 14:47:00 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,7 @@ int main()
 	printf("|%s\n", line);
 	free(line);
 	close(fd);
-
-	if (i == -1)
-		printf ("\nError in Function - Returned -1\n");
-	else if (j == 66)
-		printf("\nRight number of lines\n");
-	else if (j != 66)
-		printf("\nNot Good - Wrong Number Of Lines\n");
-	while (--j > 0)
-		free(lineadress[j - 1]);
+	printf("\nFinished\n");
+	free(lineadress[j - 1]);
 	j = 1;
 }

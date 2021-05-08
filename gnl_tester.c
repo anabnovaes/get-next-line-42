@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:41:13 by mchardin          #+#    #+#             */
-/*   Updated: 2021/05/08 14:47:00 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/08 17:45:17 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,4 @@ int main()
 	close(fd);
 	printf("\nFinished\n");
 	free(lineadress[j - 1]);
-	j = 1;
 }

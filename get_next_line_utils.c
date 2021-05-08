@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:49 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/08 15:04:24 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/08 15:36:44 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,16 @@ int	ft_strchr(char *s, int c)
 		return (-1);
 	while (s[counter] != '\0')
 	{
-		printf("posicao %d\n", s[counter]);
 		if (s[counter] == c)
+		{
+			printf("voltei isso aqui %d \n", counter);
 			return (counter);
+		}
 		counter++;
 	}
 	if (s[counter] == c)
 		return (counter);
+	printf("**não achei quebra de linha \n");
 	return (-1);
 }
 

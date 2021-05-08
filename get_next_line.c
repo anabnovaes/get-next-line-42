@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:53 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/08 15:28:58 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/08 17:46:39 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,36 @@
 #include <unistd.h>
 #include "get_next_line.h"
 
-static void	join_and_concat(char *temp, char *n_line, char *buff, char **line)
+static void	join(char *temp, char *next, char *buff, char **line)
 {
-	int		posit;
+	int		pos;
 
-	if (ft_strchr(n_line, '\n'))
+	pos = 0;
+	if (ft_strchr(next, '\n') != -1)
 	{
-		posit = ft_strchr(n_line, '\n');
-		printf("posit %d \n" , posit);
-		if (n_line[posit + 1])
+		pos = ft_strchr(next, '\n');
+		printf("pos %d \n", pos);
+		if (next[pos + 1])
 		{
 			printf("vou unir aqui \n");
-			temp = ft_strjoin(temp, n_line, posit);
+			temp = ft_strjoin(temp, next, pos);
 			printf("estatica :  %s\n", temp);
 		}
 		printf("oii \n");
-		n_line =ft_strjoin(n_line, buff + posit + 1, BUFFER_SIZE - posit);
+		next =ft_strjoin(next, buff + pos + 1, BUFFER_SIZE - pos);
 	}	
 	else
 	{
-		posit = ft_strchr(buff, '\n');
-		printf("posit %d \n", posit);
-		if (buff[posit + 1])
+		printf("buff concat : %s", buff);
+		pos = ft_strchr(buff, '\n');
+		printf("pos %d \n", pos);
+		if (buff[pos + 1])
 		{
 			printf("vou concatenar \n");
-			n_line =ft_strjoin(n_line, buff + posit + 1, BUFFER_SIZE - posit);
-			printf("estatica :  %s\n", n_line);
+			next =ft_strjoin(next, buff + pos + 1, BUFFER_SIZE - pos);
+			printf("estatica :  %s\n", next);
 		}
 		printf("vou unir o que falta \n");
-		temp = ft_strjoin(temp, buff, posit);
 	}
 	printf("temp :  %s\n", temp);
 	*line = temp;
@@ -50,33 +51,41 @@ static void	join_and_concat(char *temp, char *n_line, char *buff, char **line)
 
 int	read_file(int fd, char *buff, char	*n_line, char **line)
 {
-	size_t	reading;
+	int		reader;
 	int		posit;
 	char	*temp;
+	int		is_nothing;
 
 	temp = NULL;
+	is_nothing = 0;
 	write(1, "antes de verificar n_line\n", 27);
 	if (n_line)
 	{
 		printf("tem coisa na static");
 		if (ft_strchr(n_line, '\n') != -1)
 		{
-			join_and_concat(temp, n_line, buff, line);
+			join(temp, n_line, buff, line);
 			return (1);
 		}
 	}
 	while (ft_strchr(buff, '\n') == -1 || ft_strchr(buff, '\0') == -1)
 	{
-		printf("entrei \n");
+		printf("entrei no while \n");
 		ft_bzero(buff, sizeof(buff));
-		reading = read(fd, buff, BUFFER_SIZE);
-		printf("reading :%s \n", buff);
-		if (reading == 0)
-			return (0);
-		if ((ft_strchr(buff, '\n') != -1))
+		reader = read(fd, buff, BUFFER_SIZE);
+		printf("reader : %ld \n", reader);
+		printf("read :%s \n", buff);
+		if (read == 0)
+		{
+			is_nothing = 1;
+			break ;
+		}	
+		if ((ft_strchr(buff, '\n') != -1) && !is_nothing)
 		{
 			printf("entrei no if \n");
-			join_and_concat(temp, n_line, buff, line);
+			posit = ft_strchr(buff, '\n');
+			temp = ft_strjoin(temp, buff, posit);
+			join(temp, n_line, buff, line);
 			return (1);
 		}
 		else
@@ -87,6 +96,8 @@ int	read_file(int fd, char *buff, char	*n_line, char **line)
 			printf("apos join :%s\n", temp);
 		}
 	}
+	if (is_nothing == 1)
+		return (0);
 	return (1);
 }
 
@@ -105,7 +116,7 @@ int	get_next_line(int fd, char **line)
 	{
 		return (-1);
 	}
-	if (!read_file(fd, buff, next_line, line))
+	if (read_file(fd, buff, next_line, line) == 0)
 	{
 		free(buff);
 		return (0);
@@ -119,6 +130,7 @@ void	*ft_calloc(size_t count, size_t size)
 	size_t	counter;
 	char	*final_value;
 
+	counter = 0;
 	pointer = malloc(count * size);
 	if (!pointer)
 		return (NULL);

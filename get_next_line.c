@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:53 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/08 21:12:11 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/09 00:01:39 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,134 +14,60 @@
 #include <unistd.h>
 #include "get_next_line.h"
 
-static void	join(char *temp, char *next, char *buff, char **line)
+static int	new_line(char **next_line, char **temp)
 {
-	int		pos;
+	int		end_line;
+	char	*new_temp;
 
-	pos = 0;
-	if (ft_strchr(next, '\n') != -1)
+	end_line = ft_strchr(*temp, '\n');
+	temp[0][end_line] = '\0';
+	*next_line = ft_strdup(*temp);
+	if (!next_line)
+		return (0);
+	end_line++;
+	if (temp[0][end_line])
 	{
-		pos = ft_strchr(next, '\n');
-		//printf("pos %d \n", pos);
-		if (next[pos + 1])
-		{
-			//printf("vou unir aqui \n");
-			temp = ft_strjoin(temp, next, pos);
-			//printf("estatica :  %s\n", temp);
-		}
-		//printf("oii \n");
-		next =ft_strjoin(next, buff + pos + 1, BUFFER_SIZE - pos);
-	}	
-	else
-	{
-		//printf("buff concat : %s", buff);
-		pos = ft_strchr(buff, '\n');
-		temp = ft_strjoin(temp, buff, pos);
-		//printf("pos %d \n", pos);
-		if (buff[pos + 1])
-		{
-			//printf("vou concatenar \n");
-			next =ft_strjoin(next, buff + pos + 1, BUFFER_SIZE - pos);
-			//printf("estatica :  %s\n", next);
-		}
-		//printf("vou unir o que falta \n");
+		new_temp = ft_strdup(*temp + end_line);
+		free(*temp);
+		*temp = new_temp;
 	}
-	//printf("temp :  %s\n", temp);
-	*line = temp;
+	return (1);
 }
 
-int	read_file(int fd, char *buff, char	*n_line, char **line)
+int	read_file(int fd, char *buff, char **temp, int *b_read)
 {
-	int		reader;
-	int		posit;
-	char	*temp;
-	int		end_file;
-
-	temp = NULL;
-	end_file = 0;
-	write(1, "antes de verificar n_line\n", 27);
-	if (n_line)
+	while (*b_read && ft_strchr(*temp, '\n') == -1)
 	{
-		////printf("tem coisa na static");
-		if (ft_strchr(n_line, '\n') != -1)
-		{
-			join(temp, n_line, buff, line);
-			return (1);
-		}
+		*b_read = read(fd, buff, BUFFER_SIZE);
+		if (*b_read < 0 || BUFFER_SIZE < *b_read)
+			return (-1);
+		if (*b_read)
+			*temp = ft_strjoin(*temp, buff, BUFFER_SIZE + 1);
 	}
-	while (ft_strchr(buff, '\n') == -1 && !end_file)
-	{
-		//printf("entrei no while \n");
-		//ft_bzero(buff, sizeof(buff));
-		reader = read(fd, buff, BUFFER_SIZE);
-		//printf("reader : %d \n", reader);
-		//printf("read :%s \n", buff);
-		if (reader == 0)
-		{
-			//printf("vi que o read tá vazio \n");
-			end_file = 1;
-			break ;
-		}	
-		else if ((ft_strchr(buff, '\n') != -1) && !end_file)
-		{
-			//printf("achei quebra de linha \n");
-			posit = ft_strchr(buff, '\n');
-			join(temp, n_line, buff, line);
-			return (1);
-		}
-		else
-		{
-			posit = BUFFER_SIZE + 1;
-			//printf("temp :%s\n", temp);
-			temp = ft_strjoin(temp, buff, posit);
-			//printf("apos join :%s\n", temp);
-		}
-	}
-	if (end_file == 1)
-		return (0);
 	return (1);
 }
 
 int	get_next_line(int fd, char **line)
 {
-	static char	*next_line;
+	static char	*temp;
 	char		*buff;
+	int			b_read;
+	int			readed;
 
-	if (BUFFER_SIZE <= 0 || fd < 0 )
-	{
+	b_read = 1;
+	if (fd < 0 || fd > RLIMIT_NOFILE || !(line) || BUFFER_SIZE <= 0)
 		return (-1);
-	}
-	buff = (char *)ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buff)
-	{
 		return (-1);
-	}
-	if (read_file(fd, buff, next_line, line) == 0)
-	{
-		free(buff);
+	readed = read_file(fd, buff, &temp, &b_read);
+	free(buff);
+	if (readed == -1)
+		return (-1);
+	 new_line(line, &temp);
+	if (!line)
+		return (-1);
+	if (!b_read)
 		return (0);
-	}
 	return (1);
-}
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*pointer;
-	size_t	counter;
-	char	*final_value;
-
-	counter = 0;
-	pointer = malloc(count * size);
-	if (!pointer)
-		return (NULL);
-	else
-	{
-		final_value = (char *)pointer;
-		while (counter < count)
-		{
-			final_value[counter] = '\0';
-			counter++;
-		}
-		return (pointer);
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 17:41:13 by mchardin          #+#    #+#             */
-/*   Updated: 2021/05/08 17:45:17 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/08 20:50:02 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ int main()
 	printf("========== TEST 1 : The Alphabet =========\n");
 	printf("==========================================\n\n");
 
-	if (!(fd = open("files/43_char", O_RDONLY)))
+	if (!(fd = open("files/empty_lines", O_RDONLY)))
 	{
 		printf("\nError in open\n");
 		return (0);
 	}
-	while ((i = get_next_line(fd, &line)) > 0)
+	while ((i = get_next_line(fd, &line)) >= 0)
 	{
-		printf("|%s\n", line);
+		printf("|%s\n\n\n", line);
 		free(line);
 		lineadress[j - 1] = line;
 		j++;

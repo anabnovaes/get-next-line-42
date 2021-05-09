@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:53 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/08 17:46:39 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/08 21:12:11 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,31 @@ static void	join(char *temp, char *next, char *buff, char **line)
 	if (ft_strchr(next, '\n') != -1)
 	{
 		pos = ft_strchr(next, '\n');
-		printf("pos %d \n", pos);
+		//printf("pos %d \n", pos);
 		if (next[pos + 1])
 		{
-			printf("vou unir aqui \n");
+			//printf("vou unir aqui \n");
 			temp = ft_strjoin(temp, next, pos);
-			printf("estatica :  %s\n", temp);
+			//printf("estatica :  %s\n", temp);
 		}
-		printf("oii \n");
+		//printf("oii \n");
 		next =ft_strjoin(next, buff + pos + 1, BUFFER_SIZE - pos);
 	}	
 	else
 	{
-		printf("buff concat : %s", buff);
+		//printf("buff concat : %s", buff);
 		pos = ft_strchr(buff, '\n');
-		printf("pos %d \n", pos);
+		temp = ft_strjoin(temp, buff, pos);
+		//printf("pos %d \n", pos);
 		if (buff[pos + 1])
 		{
-			printf("vou concatenar \n");
+			//printf("vou concatenar \n");
 			next =ft_strjoin(next, buff + pos + 1, BUFFER_SIZE - pos);
-			printf("estatica :  %s\n", next);
+			//printf("estatica :  %s\n", next);
 		}
-		printf("vou unir o que falta \n");
+		//printf("vou unir o que falta \n");
 	}
-	printf("temp :  %s\n", temp);
+	//printf("temp :  %s\n", temp);
 	*line = temp;
 }
 
@@ -54,49 +55,49 @@ int	read_file(int fd, char *buff, char	*n_line, char **line)
 	int		reader;
 	int		posit;
 	char	*temp;
-	int		is_nothing;
+	int		end_file;
 
 	temp = NULL;
-	is_nothing = 0;
+	end_file = 0;
 	write(1, "antes de verificar n_line\n", 27);
 	if (n_line)
 	{
-		printf("tem coisa na static");
+		////printf("tem coisa na static");
 		if (ft_strchr(n_line, '\n') != -1)
 		{
 			join(temp, n_line, buff, line);
 			return (1);
 		}
 	}
-	while (ft_strchr(buff, '\n') == -1 || ft_strchr(buff, '\0') == -1)
+	while (ft_strchr(buff, '\n') == -1 && !end_file)
 	{
-		printf("entrei no while \n");
-		ft_bzero(buff, sizeof(buff));
+		//printf("entrei no while \n");
+		//ft_bzero(buff, sizeof(buff));
 		reader = read(fd, buff, BUFFER_SIZE);
-		printf("reader : %ld \n", reader);
-		printf("read :%s \n", buff);
-		if (read == 0)
+		//printf("reader : %d \n", reader);
+		//printf("read :%s \n", buff);
+		if (reader == 0)
 		{
-			is_nothing = 1;
+			//printf("vi que o read tá vazio \n");
+			end_file = 1;
 			break ;
 		}	
-		if ((ft_strchr(buff, '\n') != -1) && !is_nothing)
+		else if ((ft_strchr(buff, '\n') != -1) && !end_file)
 		{
-			printf("entrei no if \n");
+			//printf("achei quebra de linha \n");
 			posit = ft_strchr(buff, '\n');
-			temp = ft_strjoin(temp, buff, posit);
 			join(temp, n_line, buff, line);
 			return (1);
 		}
 		else
 		{
 			posit = BUFFER_SIZE + 1;
-			printf("temp :%s\n", temp);
+			//printf("temp :%s\n", temp);
 			temp = ft_strjoin(temp, buff, posit);
-			printf("apos join :%s\n", temp);
+			//printf("apos join :%s\n", temp);
 		}
 	}
-	if (is_nothing == 1)
+	if (end_file == 1)
 		return (0);
 	return (1);
 }
@@ -106,7 +107,6 @@ int	get_next_line(int fd, char **line)
 	static char	*next_line;
 	char		*buff;
 
-	printf("inicio execucao \n");
 	if (BUFFER_SIZE <= 0 || fd < 0 )
 	{
 		return (-1);

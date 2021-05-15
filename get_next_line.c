@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:53 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/15 18:38:38 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/15 18:46:53 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,11 @@ int	read_file(int fd, char *buff, char **temp, int *b_read)
 		if (*b_read)
 		{
 			temp_buff = NULL;
-			temp_buff = ft_strjoin(*temp, buff, BUFFER_SIZE + 1);
+			temp_buff = ft_strjoin(*temp, buff, *b_read);
 			*temp = temp_buff;
 		}
+		if (BUFFER_SIZE > *b_read)
+			break;
 	}
 	if (verifier == 0 && ft_strchr(*temp, '\0') == -1)
 		b_read = 0;

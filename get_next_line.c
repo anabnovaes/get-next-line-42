@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:53 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/15 13:17:06 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/15 14:34:17 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,35 @@
 #include <unistd.h>
 #include "get_next_line.h"
 
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*pointer;
+	size_t	counter;
+	char	*final_value;
+
+	counter = 0;
+	pointer = malloc(count * size);
+	if (!pointer)
+		return (NULL);
+	else
+	{
+		final_value = (char *)pointer;
+		while (counter < size)
+		{
+			final_value[counter] = '\0';
+			counter++;
+		}
+	}
+	return (pointer);
+}
+
 static int	new_line(char **next_line, char **temp)
 {
 	int		end_line;
 	char	*new_temp;
+	int		size_temp;
 
+	size_temp = ft_strlen(*temp);
 	end_line = ft_strchr(*temp, '\n');
 	if (end_line == -1)
 		end_line = ft_strchr(*temp, '\0');
@@ -26,9 +50,9 @@ static int	new_line(char **next_line, char **temp)
 	*next_line = ft_strdup(*temp);
 	if (!next_line)
 		return (0);
-	end_line++;
-	if (ft_strlen(temp[0] + end_line))
+	if (size_temp > end_line)
 	{
+		end_line++;
 		new_temp = ft_strdup(*temp + end_line);
 		free(*temp);
 		*temp = new_temp;
@@ -42,6 +66,7 @@ int	read_file(int fd, char *buff, char **temp, int *b_read)
 {
 	char	*temp_buff;
 
+	temp_buff = ft_strdup("");
 	while (*b_read && (ft_strchr(*temp, '\n') == -1
 			|| ft_strchr(*temp, '\0') == -1))
 	{
@@ -71,7 +96,7 @@ int	get_next_line(int fd, char **line)
 	b_read = 1;
 	if (fd < 0 || fd > RLIMIT_NOFILE || !(line) || BUFFER_SIZE <= 0)
 		return (-1);
-	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buff = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
 	if (!buff)
 		return (-1);
 	if (!temp)
@@ -86,3 +111,4 @@ int	get_next_line(int fd, char **line)
 		return (0);
 	return (1);
 }
+

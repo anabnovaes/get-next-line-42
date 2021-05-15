@@ -6,7 +6,7 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:53 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/15 17:40:37 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/15 17:44:36 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,14 @@ int	get_next_line(int fd, char **line)
 	readed = read_file(fd, buff, &temp, &b_read);
 	if (readed == -1)
 		return (-1);
+	if (temp)
+		temp = new_line(line, &temp);
+	if (!line)
+		return (-1);
 	if (!b_read)
 	{
 		free(temp);
 		return (0);
 	}
-	temp = new_line(line, &temp);
-	if (!line)
-		return (-1);
 	return (1);
 }

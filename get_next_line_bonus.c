@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:53 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/15 21:50:07 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/15 21:55:27 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	*ft_calloc(size_t count, size_t size)
 {
@@ -85,7 +85,7 @@ int	read_file(int fd, char *buff, char **temp, int *b_read)
 
 int	get_next_line(int fd, char **line)
 {
-	static char	*temp;
+	static char	*temp[OPEN_MAX];
 	char		*buff;
 	int			b_read;
 	int			readed;
@@ -96,13 +96,13 @@ int	get_next_line(int fd, char **line)
 	buff = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
 	if (!buff)
 		return (-1);
-	if (!temp)
-		temp = ft_strdup("");
-	readed = read_file(fd, buff, &temp, &b_read);
+	if (!temp[fd])
+		temp[fd] = ft_strdup("");
+	readed = read_file(fd, buff, &temp[fd], &b_read);
 	if (readed == -1 || !line)
 		return (-1);
-	if (temp)
-		temp = new_line(line, &temp);
+	if (temp[fd])
+		temp[fd] = new_line(line, &temp[fd]);
 	if (!b_read)
 	{
 		free(temp);

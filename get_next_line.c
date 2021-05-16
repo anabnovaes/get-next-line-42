@@ -6,15 +6,13 @@
 /*   By: apaula-b <apaula-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 19:50:53 by apaula-b          #+#    #+#             */
-/*   Updated: 2021/05/15 21:12:39 by apaula-b         ###   ########.fr       */
+/*   Updated: 2021/05/15 21:36:12 by apaula-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <unistd.h>
 #include "get_next_line.h"
-
-
 
 void	*ft_calloc(size_t count, size_t size)
 {
@@ -103,12 +101,10 @@ int	get_next_line(int fd, char **line)
 	if (!temp)
 		temp = ft_strdup("");
 	readed = read_file(fd, buff, &temp, &b_read);
-	if (readed == -1)
+	if (readed == -1 || !line)
 		return (-1);
 	if (temp)
 		temp = new_line(line, &temp);
-	if (!line)
-		return (-1);
 	if (!b_read)
 	{
 		free(temp);
